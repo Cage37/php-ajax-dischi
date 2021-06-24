@@ -10,15 +10,43 @@
 var app = new Vue({
   el: '#app',
   data: {
-    albums: null
+    albums: [],
+    selectedAlbums: [],
+    element: "all"
   },
-  methods: {},
+  methods: {
+    selectEl: function selectEl() {
+      var select = document.getElementById("select").value;
+      console.log(select);
+      this.selectedAlbums = [];
+
+      for (var index = 0; index < this.albums.length; index++) {
+        if (select !== "All") {
+          if (this.albums[index].genre == select) {
+            this.selectedAlbums.push(this.albums[index]);
+          }
+        } else {
+          this.selectedAlbums.push(this.albums[index]);
+        }
+      }
+    },
+    olderAlbum: function olderAlbum(a, b) {
+      if (a.year < b.year) {
+        return -1;
+      } else if (a.year > b.year) {
+        return 1;
+      }
+
+      return 0;
+    }
+  },
   mounted: function mounted() {
     var _this = this;
 
     axios.get('./src/partials/database.php').then(function (resp) {
       console.log(resp);
       _this.albums = resp.data;
+      _this.selectedAlbums = resp.data;
     })["catch"](function (e) {
       console.log(e);
     });
