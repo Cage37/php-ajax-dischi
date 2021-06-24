@@ -1,7 +1,5 @@
 <?php
 
-require __DIR__ . '/src/partials/database.php'
-
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +16,7 @@ require __DIR__ . '/src/partials/database.php'
     <div id="app">
         
         <header>
+            <img src="./dist/img/Spotify.png" alt="">
             <h1>TOP ALBUM</h1>
             <div class="divselect">
                 <select name="" id="select">
@@ -31,14 +30,12 @@ require __DIR__ . '/src/partials/database.php'
         </header>
 
         <main>
-            <?php foreach($albums as $key => $value) { ?>
-                <div class="albumcard">
-                    <img src="<?= $value["poster"] ?>" alt="">
-                    <p class="albumtitle"><?= $value["title"] ?></p>
-                    <p class="author"><?= $value["author"] ?></p>
-                    <p class="year"><?= $value["year"] ?></p>
-                </div>    
-            <?php } ?>
+        <div class="albumcard" v-for="(album, index) in albums">
+                <img :src="album.poster" alt="">
+                <p class="albumtitle"> {{ album.title }} </p>
+                <p class="author"> {{ album.author }} </p>
+                <p class="year"> {{ album.year }} </p>
+            </div>
         </main>
 
     </div>
